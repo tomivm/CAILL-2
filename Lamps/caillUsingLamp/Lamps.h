@@ -11,6 +11,7 @@ class Lamps{
 
         int onValue;   //Value on minutes that the lamp turn On
         int offValue; 
+        const minutesInADay = 1439; /*23*60+59 TEST THIS*/
         int convertTimeToMinutes (byte hour, byte min = 0){
             {
             if (hour){
@@ -22,8 +23,8 @@ class Lamps{
         void minutesToSwitch( byte onHourParameter, byte onMinParameter, byte lightHoursParameter ){
             turnOnMinute = convertTimeToMinutes( onHourParameter, onMinParameter );
             turnOffMinute = convertTimeToMinutes(lightHoursParameter) + turnOnMinute;
-            if (turnOffMinute >= 1439/*23*60+59*/){
-                turnOffMinute = turnOffMinute - 1439;
+            if (turnOffMinute >= minutesInADay){
+                turnOffMinute = turnOffMinute - minutesInADay;
                 turnOffTomorrow = true;
                 return;
             }
@@ -45,7 +46,7 @@ class Lamps{
         void SetLampTime( int onHourParameter, int onMinParameter, int lightHoursParameter ){
             lightHours = lightHoursParameter;
             minutesToSwitch( onHourParameter, onMinParameter, lightHoursParameter);
-        }     // Declaracion de funcion externa
+        }
 
         // int getLampTime(){ //toDo
         //     int hourAndMinutes[] = {0, 0};
@@ -55,7 +56,7 @@ class Lamps{
             int nowTimeInMin = convertTimeToMinutes( nowHour, nowMinute);
             Serial.println("kliaa");
             Serial.println(nowTimeInMin);
-            if (turnOffTomorrow){ //manera en que la lampara identifica su estado, si su momento de apagar esta al otro dia del momento de prender
+            if (turnOffTomorrow){ //the way in that the lamp identify if it needs to turn on and off in differents day
                 if(nowTimeInMin >= turnOnMinute || nowTimeInMin <= turnOffMinute ){
                     digitalWrite( pinOut, HIGH);
                     return 1;
@@ -70,5 +71,6 @@ class Lamps{
             }
             digitalWrite(pinOut, LOW);
             return 0;  
-        }           // Declaracion de funcion externa
-   }; 
+        }
+   };
+    
