@@ -1,5 +1,5 @@
 #include "Arduino.h"
-class Lamps{  
+class Lamp{  
     private:
         String name;
         int id;
