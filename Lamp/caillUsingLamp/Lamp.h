@@ -32,8 +32,8 @@ class Lamp{
         }
 
         bool turnOff(){
-            digitalWrite(pinOut, HIGH);
-            return 1;
+            digitalWrite(pinOut, LOW);
+            return 0;
         }
         
         int convertTimeToMinutes (byte hour, byte min = 0){
