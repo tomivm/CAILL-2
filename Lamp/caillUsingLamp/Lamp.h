@@ -8,6 +8,7 @@ class Lamp{
         int turnOffMinute;
         bool turnOffTomorrow = false;
         byte lightHours;
+        bool isOn;
 
         int onValue;   //Value on minutes that the lamp turn On
         int offValue; 
@@ -28,12 +29,14 @@ class Lamp{
 
         bool turnOn(){
             digitalWrite(pinOut, HIGH);
-            return 1;
+            isOn = 1;
+            return isOn;
         }
 
         bool turnOff(){
             digitalWrite(pinOut, LOW);
-            return 0;
+            isOn = 0;
+            return isOn;
         }
         
         int convertTimeToMinutes (byte hour, byte min = 0){
@@ -92,6 +95,10 @@ class Lamp{
             return turnOffMinute;
         }
         
+        bool getLampState(){
+            return isOn;
+        }
+
         bool updateLampState(byte nowHour, byte nowMinute){
             return manageLamp(convertTimeToMinutes( nowHour, nowMinute));
         }
