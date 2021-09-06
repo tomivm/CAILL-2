@@ -11,20 +11,52 @@ class Lamp{
 
         int onValue;   //Value on minutes that the lamp turn On
         int offValue; 
-        const minutesInADay = 1439; /*23*60+59 TEST THIS*/
-        int convertTimeToMinutes (byte hour, byte min = 0){
-            {
-            if (hour){
-                return hour*60 + min;
-            }   
-            return 0;
+
+        int manageLamp(int nowTimeInMin){
+            if (turnOffTomorrow){ //the way in that the lamp identify if it needs to turn on and off in differents day
+                if(nowTimeInMin >= turnOnMinute || nowTimeInMin <= turnOffMinute ){
+                    return turnOn();
+                }
+                return turnOff();  
+                
             }
+            if((nowTimeInMin >= turnOnMinute) && (nowTimeInMin < turnOffMinute)){
+                return turnOn();
+            }
+            return turnOff();
         }
+
+        bool turnOn(){
+            digitalWrite(pinOut, HIGH);
+            return 1;
+        }
+
+        bool turnOff(){
+            digitalWrite(pinOut, HIGH);
+            return 1;
+        }
+        
+        int convertTimeToMinutes (byte hour, byte min = 0){
+            const byte HOUR_IN_MINUTES = 60;
+            if (hour){
+                return hour * HOUR_IN_MINUTES + min;
+            }   
+            return min;
+        }
+        
+        // int convertMinutesToTime (int minutes){
+        //     int hour = minutes / HOUR_IN_MINUTES;
+        //     int minute = minutes % HOUR_IN_MINUTES;
+        //     return int [ hour, minute ]
+        // }
+
         void minutesToSwitch( byte onHourParameter, byte onMinParameter, byte lightHoursParameter ){
+            const int MINUTES_IN_A_DAY = 1439; /*23*60+59 TEST THIS*/
+
             turnOnMinute = convertTimeToMinutes( onHourParameter, onMinParameter );
             turnOffMinute = convertTimeToMinutes(lightHoursParameter) + turnOnMinute;
-            if (turnOffMinute >= minutesInADay){
-                turnOffMinute = turnOffMinute - minutesInADay;
+            if (turnOffMinute >= MINUTES_IN_A_DAY){
+                turnOffMinute = turnOffMinute - MINUTES_IN_A_DAY;
                 turnOffTomorrow = true;
                 return;
             }
@@ -32,7 +64,7 @@ class Lamp{
         }
           
       public:
-        Lamps(byte pin){
+        Lamp(byte pin){
             pinOut = pin;
             Serial.begin(115200);
             Serial.println("lamp");
@@ -43,34 +75,24 @@ class Lamp{
             pinOut = pin; 
         }
         
-        void SetLampTime( int onHourParameter, int onMinParameter, int lightHoursParameter ){
+        void setLampTime( int onHourParameter, int onMinParameter, int lightHoursParameter ){
             lightHours = lightHoursParameter;
             minutesToSwitch( onHourParameter, onMinParameter, lightHoursParameter);
         }
 
-        // int getLampTime(){ //toDo
-        //     int hourAndMinutes[] = {0, 0};
-        //     return hourAndMinutes;
+        // int getOnLampTime(){ // consider utility!!!!
+        //     return convertMinutesToTime(turnOnMinute)
         // };
-        bool getLampState(byte nowHour, byte nowMinute){
-            int nowTimeInMin = convertTimeToMinutes( nowHour, nowMinute);
-            Serial.println("kliaa");
-            Serial.println(nowTimeInMin);
-            if (turnOffTomorrow){ //the way in that the lamp identify if it needs to turn on and off in differents day
-                if(nowTimeInMin >= turnOnMinute || nowTimeInMin <= turnOffMinute ){
-                    digitalWrite( pinOut, HIGH);
-                    return 1;
-                }
-                digitalWrite( pinOut, LOW);
-                return 0;   
-                
-            }
-            if((nowTimeInMin >= turnOnMinute) && (nowTimeInMin < turnOffMinute)){
-                digitalWrite(pinOut, HIGH);
-                return 1;
-            }
-            digitalWrite(pinOut, LOW);
-            return 0;  
+
+        int getTurnOnMinute(){
+            return turnOnMinute;
+        }
+
+        int getTurnOffMinute(){
+            return turnOffMinute;
+        }
+        
+        bool updateLampState(byte nowHour, byte nowMinute){
+            return manageLamp(convertTimeToMinutes( nowHour, nowMinute));
         }
    };
-    

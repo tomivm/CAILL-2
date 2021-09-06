@@ -9,11 +9,11 @@ int horaEncendido = 21, minEncendido = 30, horasDeLuz = 12 ;
 
 Lamp Lamp1(4);
 void setup() {
-    Lamp1.SetLampTime( horaEncendido, minEncendido, horasDeLuz );
+    Lamp1.setLampTime( horaEncendido, minEncendido, horasDeLuz );
 }
 
 void loop() {  
-  bool lamp = Lamp1.getLampState(Hora, Min);
+  bool lamp = Lamp1.updateLampState(Hora, Min);
   
   delay(500);
 }
