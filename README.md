@@ -1,2 +1,2 @@
 # CAILL-2
-Software and hardware of grow.
+Open Software and hardware for grow.
