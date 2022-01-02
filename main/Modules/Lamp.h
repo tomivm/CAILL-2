@@ -4,6 +4,7 @@ class Lamp{
         String name;
         int id;
         int pinOut;
+        bool onLevel;
         int turnOnMinute;
         int turnOffMinute;
         bool turnOffTomorrow = false;
@@ -28,13 +29,13 @@ class Lamp{
         }
 
         bool turnOn(){
-            digitalWrite(pinOut, HIGH);
+            digitalWrite(pinOut, onLevel);
             isOn = 1;
             return isOn;
         }
 
         bool turnOff(){
-            digitalWrite(pinOut, LOW);
+            digitalWrite(pinOut, !onLevel);
             isOn = 0;
             return isOn;
         }
@@ -67,8 +68,10 @@ class Lamp{
         }
           
       public:
-        Lamp(byte pin){
+        Lamp(byte pin, bool ON_LEVEL){
             pinOut = pin;
+            pinMode(pinOut, OUTPUT);
+            onLevel = ON_LEVEL;
             Serial.begin(115200);
             Serial.println("lamp");
             //setLampTime();
