@@ -1,8 +1,11 @@
-#include "Lamp.h"
-#include "AirConditioner.h"
-#include "Clock.h"
+#include "./Modules/Lamp.h"
+#include "./Modules/AirConditioner.h"
+#include "./Modules/Clock.h"
 
-#define LAMP_PIN 0
+/* This pin layout is for our nodemcu pcb desing
+pay atention that is different for CAILL_nano*/
+
+#define LAMP_PIN 0 //#define Lampara 4 in CAILL_nano
 #define AIR_CONDITIONER_PIN 13
 
 bool setTime = false; ///if true, the time of clock is seted with the next int vars
@@ -11,7 +14,7 @@ int minute = 49;
 
 int temperature = 28;
 
-int horaEncendido = 0, minEncendido = 30, horasDeLuz = 12 ;
+int horaEncendido = 23, minEncendido = 0, horasDeLuz = 8 ;
 byte wantedTemperatureDay = 26, maxTemperatureDay = 30; 
 byte wantedTemperatureNight = 26, maxTemperatureNight = 35; 
 
@@ -32,7 +35,9 @@ void refreshTime(){
   RealTimeClock.getTimeStamp();
   hour = RealTimeClock.now.Hour();
   minute = RealTimeClock.now.Minute();
-  Serial.println(hour);
+  Serial.println("Time");
+  Serial.print(hour);
+  Serial.print(" : ");
   Serial.println(minute);  
 }
 
