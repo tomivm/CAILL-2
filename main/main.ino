@@ -21,7 +21,7 @@ byte wantedTemperatureNight = 26, maxTemperatureNight = 35;
 
 
 Clock RealTimeClock(setTime, hour, minute);
-Lamp Lamp1(LAMP_PIN,);
+Lamp Lamp1(LAMP_PIN, LAMP_ON_LEVEL);
 AirConditioner AirConditioner1(5);
 
 int convertTimeToMinutes (byte hour, byte min = 0){
