@@ -5,7 +5,8 @@
 /* This pin layout is for our nodemcu pcb desing
 pay atention that is different for CAILL_nano*/
 
-#define LAMP_PIN 0 //#define Lampara 4 in CAILL_nano
+#define LAMP_PIN 0 //#define LAMP_PIN 4 //------------------ in CAILL_nano
+#define LAMP_ON_WHITH 0 // #define LAMP_ON_WHITH 1 // ------ in CAILL_nano
 #define AIR_CONDITIONER_PIN 13
 
 bool setTime = false; ///if true, the time of clock is seted with the next int vars
@@ -20,7 +21,7 @@ byte wantedTemperatureNight = 26, maxTemperatureNight = 35;
 
 
 Clock RealTimeClock(setTime, hour, minute);
-Lamp Lamp1(LAMP_PIN);
+Lamp Lamp1(LAMP_PIN,);
 AirConditioner AirConditioner1(5);
 
 int convertTimeToMinutes (byte hour, byte min = 0){

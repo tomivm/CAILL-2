@@ -95,9 +95,9 @@ class AirConditioner{
             if(lampState){
                 return manageAcDay(indoorTemperature);
             }
-            if (isTimeToPrepare( nowMinutes, onMinutes )){
-                return manageAcPrepareForDay(indoorTemperature);
-            }
+            // if (isTimeToPrepare( nowMinutes, onMinutes )){
+            //     return manageAcPrepareForDay(indoorTemperature);
+            // }
             return manageAcNight(indoorTemperature);
         }
    };
