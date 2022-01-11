@@ -5,8 +5,8 @@
 
 #if defined(ESP8266)
 // NODEMCU - ESP8266 specific code here
-  #include "./Modules/Wifi.h"
-  #define Wifi 1
+  #include "./Modules/WiFiMananger"
+  #define SUPPORT_WIFI 1
 
   #define LAMP_PIN D3
   #define LAMP_ON_LEVEL 0

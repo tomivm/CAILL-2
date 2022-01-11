@@ -8,7 +8,7 @@
     #include <ArduinoJson.h>
 #endif
 
-class Wifi{  
+class WiFiMananger{  
     private:
         
         String name;
