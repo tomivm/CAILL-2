@@ -3,12 +3,20 @@
 #include "./Modules/Clock.h"
 #include "./Modules/TemperatureHumidity.h"
 
-/* This pin layout is for our nodemcu pcb desing
-pay atention that is different for CAILL_nano*/
+#if defined(ESP8266)
+// NODEMCU - ESP8266 specific code here
+  #include "./Modules/Wifi.h"
+  #define Wifi 1
 
-#define LAMP_PIN D3//#define LAMP_PIN 4 //------------------ in CAILL_nano
-#define LAMP_ON_LEVEL 0 // #define LAMP_ON_WHITH 1 // ------ in CAILL_nano
-#define AIR_CONDITIONER_PIN 2
+  #define LAMP_PIN D3
+  #define LAMP_ON_LEVEL 0
+  #define AIR_CONDITIONER_PIN 2
+#else
+// Nano or other code here
+  #define LAMP_PIN 4//------------------ in CAILL_nano
+  #define LAMP_ON_LEVEL 1 // ------ in CAILL_nano
+  #define AIR_CONDITIONER_PIN 2
+#endif
 
 // DHT PINS DEFINE ALREADY NOT WORKING
 // #define DHTPIN 12     
