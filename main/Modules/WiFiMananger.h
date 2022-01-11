@@ -21,7 +21,7 @@ class WiFiMananger{
         WiFiClientSecure client;
         const byte MAX_ATTEMPTS = 15;
 
-        bool checkConection(){
+        bool checkConnection(){
             if (WiFi.status() == WL_CONNECTED){
                 return 1;
             }
@@ -33,7 +33,6 @@ class WiFiMananger{
         WiFiMananger(){
             #ifdef ESP8266
                 configTime(0, 0, "pool.ntp.org");      // get UTC time via NTP
-                // client.setTrustAnchors(&cert); // Add root certificate for api.telegram.org
             #endif
             WiFi.mode(WIFI_STA);
         };
@@ -49,9 +48,9 @@ class WiFiMananger{
                 {
                     break;
                 }
-                attempts = attempts++;
+                attempts++;
             }
-            bool connected = checkConection();
+            bool connected = checkConnection();
             if(connected == 1){
                 // Print ESP32 Local IP Address
                 Serial.println(WiFi.localIP());
@@ -59,6 +58,10 @@ class WiFiMananger{
             }    
             Serial.println("Connecting wifi Error..");
             return 0;
+        }
+
+        bool isConnected(){
+            return checkConnection();
         }
     
    };

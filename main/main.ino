@@ -70,6 +70,13 @@ void refreshTemperature(){
   }
 };
 
+void checkWiFi(){
+  bool isConnected = WiFiMananger.isConnected();
+  if(isConnected == 0){
+    WiFiMananger.beginConnection();
+  }
+}
+
 void setup() {
 
     refreshTime();
@@ -80,7 +87,7 @@ void setup() {
     AirConditioner1.setAirConditionerNightTemperatures( wantedTemperatureNight, maxTemperatureNight);
 
     if(SUPPORT_WIFI == 1) {
-      bool wifiConected = WiFiMananger.beginConnection();
+      bool wifiConnected = WiFiMananger.beginConnection();
     }
 }
 
@@ -94,4 +101,5 @@ void loop() {
   Serial.print("Air:");
   Serial.print(AC);
   delay(10000);
+  checkWiFi();
 }
