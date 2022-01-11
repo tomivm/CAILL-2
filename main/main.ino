@@ -5,8 +5,9 @@
 
 #if defined(ESP8266)
 // NODEMCU - ESP8266 specific code here
-  #include "./Modules/WiFiMananger"
+  #include "./Modules/WiFiMananger.h"
   #define SUPPORT_WIFI 1
+  WiFiMananger WiFiMananger;
 
   #define LAMP_PIN D3
   #define LAMP_ON_LEVEL 0
@@ -77,6 +78,10 @@ void setup() {
 
     AirConditioner1.setAirConditionerDayTemperatures( wantedTemperatureDay, maxTemperatureDay);
     AirConditioner1.setAirConditionerNightTemperatures( wantedTemperatureNight, maxTemperatureNight);
+
+    if(SUPPORT_WIFI == 1) {
+      bool wifiConected = WiFiMananger.beginConnection();
+    }
 }
 
 void loop() {  
