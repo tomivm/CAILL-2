@@ -34,6 +34,14 @@ int horaEncendido = 20, minEncendido = 0, horasDeLuz = 12 ;
 byte wantedTemperatureDay = 30, maxTemperatureDay = 33; 
 byte wantedTemperatureNight = 30, maxTemperatureNight = 33; 
 
+// Checks for CAILL state every 10 second.
+const int REFRESH_DELAY = 10000;
+unsigned long lastTimeRefresh;
+
+// Checks for new messages every 1 second.
+int botRequestDelay = 1000;
+unsigned long lastTimeBotRan;
+
 
 Clock RealTimeClock(setTime, hour, minute);
 Lamp Lamp1(LAMP_PIN, LAMP_ON_LEVEL);
@@ -93,13 +101,25 @@ void setup() {
 
 void loop() {  
 
-  refreshTime();
-  refreshTemperature();
+  if (millis() > lastTimeRefresh + REFRESH_DELAY)  {
+    //----------------
+    refreshTime();
+    refreshTemperature();
 
-  bool lamp = Lamp1.updateLampState(hour, minute);
-  bool AC = AirConditioner1.updateAcState(temperature, Lamp1.getLampState(), convertTimeToMinutes(hour, minute), Lamp1.getTurnOnMinute());
-  Serial.print("Air:");
-  Serial.print(AC);
-  delay(10000);
-  checkWiFi();
+    bool lamp = Lamp1.updateLampState(hour, minute);
+    bool AC = AirConditioner1.updateAcState(temperature, Lamp1.getLampState(), convertTimeToMinutes(hour, minute), Lamp1.getTurnOnMinute());
+    Serial.print("Air:");
+    Serial.print(AC);
+
+   //-------------------------
+
+    lastTimeRefresh = millis();
+  }
+
+  if (millis() > lastTimeBotRan + botRequestDelay)  {
+
+    checkWiFi();
+
+    lastTimeBotRan = millis();
+  }
 }
