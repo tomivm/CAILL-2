@@ -1,24 +1,19 @@
 #include "Arduino.h"
-#include <WiFiClientSecure.h>
 
 #ifdef ESP32
   #include <WiFi.h>
 #elif defined(ESP8266)
     #include <ESP8266WiFi.h>
     #include <WiFiClientSecure.h>
-    #include <UniversalTelegramBot.h>   // Universal Telegram Bot Library written by Brian Lough: https://github.com/witnessmenow/Universal-Arduino-Telegram-Bot
-    #include <ArduinoJson.h>
 #endif
 
-
 class WiFiMananger{  
-
     private:
         String name;
             // Replace with your network credentials
-        const char* ssid = "****";
-        const char* password = "*****"; 
-        WiFiClientSecure client;
+        const char* ssid = "Tomas";
+        const char* password = "23112001Agus";
+
         const byte MAX_ATTEMPTS = 15;
 
         bool checkConnection(){
@@ -27,13 +22,17 @@ class WiFiMananger{
             }
             return 0;
         }
+        
 
     public:
+        //WiFiClientSecure client;
+        //*client
 
+        
         WiFiMananger(){
-            #ifdef ESP8266
-                configTime(0, 0, "pool.ntp.org");      // get UTC time via NTP
-            #endif
+            // #ifdef ESP8266
+            //     configTime(0, 0, "pool.ntp.org");      // get UTC time via NTP
+            // #endif
             WiFi.mode(WIFI_STA);
         };
 
@@ -63,5 +62,5 @@ class WiFiMananger{
         bool isConnected(){
             return checkConnection();
         }
-    
+
    };
